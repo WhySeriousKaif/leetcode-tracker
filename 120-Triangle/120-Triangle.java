@@ -1,6 +1,6 @@
-// Last updated: 02/04/2026, 19:06:02
-1class Solution {
-2    public int minimumTotal(List<List<Integer>>A) {
+// Last updated: 13/04/2026, 00:22:54
+1public class Solution {
+2    public int minimumTotal(List < List < Integer >> A) {
 3        int m, n;
 4        m = A.size();
 5        n = A.get(m - 1).size();
