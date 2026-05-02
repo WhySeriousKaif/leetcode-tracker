@@ -1,14 +1,20 @@
-// Last updated: 02/05/2026, 11:11:30
+// Last updated: 02/05/2026, 11:15:37
 1class Solution {
 2    public boolean isPalindrome(String s) {
-3        StringBuilder newStr=new StringBuilder();
-4        for(char ch:s.toCharArray()){
-5             if(Character.isLetterOrDigit(ch)){
-6                newStr.append(Character.toLowerCase(ch));
-7             }
-8        }
-9
-10        return newStr.toString().equals(newStr.reverse().toString());
-11        
-12    }
-13}
+3        int n=s.length();
+4
+5       int i=0;
+6       int j=n-1;
+7       while(i<j){
+8         while(i<j &&!Character.isLetterOrDigit(s.charAt(i))) i++;
+9         while(i<j && !Character.isLetterOrDigit(s.charAt(j)))  j--;
+10
+11         if(Character.toLowerCase(s.charAt(i))!=Character.toLowerCase(s.charAt(j))) return false;
+12         i++;
+13         j--;
+14
+15       }
+16       return true;
+17        
+18    }
+19}
