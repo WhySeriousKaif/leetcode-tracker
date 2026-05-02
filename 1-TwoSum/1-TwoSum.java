@@ -1,30 +1,44 @@
-// Last updated: 02/05/2026, 11:34:28
-1public class Solution {
+// Last updated: 02/05/2026, 12:05:33
+1class Solution {
 2    public List<List<Integer>> threeSum(int[] nums) {
-3        Arrays.sort(nums);
-4        List<List<Integer>> res = new ArrayList<>();
-5
-6        for (int i = 0; i < nums.length; i++) {
-7            if (nums[i] > 0) break;
-8            if (i > 0 && nums[i] == nums[i - 1]) continue;
+3        if (nums.length < 3) {
+4            return new ArrayList<>();
+5        }
+6
+7        List<List<Integer>> result = new ArrayList<>();
+8        Arrays.sort(nums);
 9
-10            int l = i + 1, r = nums.length - 1;
-11            while (l < r) {
-12                int sum = nums[i] + nums[l] + nums[r];
-13                if (sum > 0) {
-14                    r--;
-15                } else if (sum < 0) {
-16                    l++;
-17                } else {
-18                    res.add(Arrays.asList(nums[i], nums[l], nums[r]));
-19                    l++;
-20                    r--;
-21                    while (l < r && nums[l] == nums[l - 1]) {
-22                        l++;
-23                    }
-24                }
-25            }
-26        }
-27        return res;
-28    }
-29}
+10        for (int i = 0; i < nums.length - 2; i++) {
+11            if (i != 0 && nums[i] == nums[i - 1]) {
+12                continue;
+13            }
+14            twoSum(nums, i + 1, result, -nums[i]);
+15        }
+16
+17        return result;
+18    }
+19
+20    private void twoSum(int[] nums, int k, List<List<Integer>> result, int target) {
+21        int i = k, j = nums.length - 1;
+22
+23        while (i < j) {
+24            if (nums[i] + nums[j] > target) {
+25                j--;
+26            } else if (nums[i] + nums[j] < target) {
+27                i++;
+28            } else {
+29                result.add(Arrays.asList(-target, nums[i], nums[j]));
+30
+31                while (i < j && nums[i] == nums[i + 1]) {
+32                    i++;
+33                }
+34                while (i < j && nums[j] == nums[j - 1]) {
+35                    j--;
+36                }
+37
+38                i++;
+39                j--;
+40            }
+41        }
+42    }
+43}
