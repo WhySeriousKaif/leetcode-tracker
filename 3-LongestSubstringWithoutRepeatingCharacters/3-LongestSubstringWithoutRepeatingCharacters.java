@@ -1,28 +1,35 @@
-// Last updated: 04/05/2026, 10:48:48
-1class Solution {
-2    public int lengthOfLongestSubstring(String s) {
-3        if(s.length()==0) return 0;
-4        int maxLength=1;
-5        for(int i=0;i<s.length();i++){
-6            int len=1;
-7            HashSet<Character>set=new HashSet<>();
-8            set.add(s.charAt(i));
-9            for(int j=i+1;j<s.length();j++){
-10                if(!set.contains(s.charAt(j))){
-11                    set.add(s.charAt(j));
-12                    len++;
-13                    maxLength=Math.max(maxLength,len);
-14                }
-15                else{
-16                    break;
-17                }
-18
-19
-20
-21            }
-22        }
-23        return maxLength;
-24        
-25    }
-26}
-27
+// Last updated: 04/05/2026, 12:38:16
+1import java.util.HashMap;
+2
+3public class Solution {
+4    public int lengthOfLongestSubstring(String s) {
+5        HashMap<Character, Integer> map = new HashMap<>();
+6        int maxLen = 0;
+7        int i = 0;
+8        
+9        for (int j = 0; j < s.length(); j++) {
+10            // Add current character to map
+11            if (map.containsKey(s.charAt(j))) {
+12                map.put(s.charAt(j), map.get(s.charAt(j)) + 1);
+13            } else {
+14                map.put(s.charAt(j), 1);
+15            }
+16            
+17            // CORE CONDITION: map.size() == window size (j - i + 1)
+18            // This means ALL characters in window are unique
+19            while (map.size() < j - i + 1) {
+20                char leftChar = s.charAt(i);
+21                map.put(leftChar, map.get(leftChar) - 1);
+22                if (map.get(leftChar) == 0) {
+23                    map.remove(leftChar);
+24                }
+25                i++;
+26            }
+27            
+28            // Update maximum length when condition == (all unique chars)
+29            maxLen = Math.max(maxLen, j - i + 1);
+30        }
+31        
+32        return maxLen;
+33    }
+34}
