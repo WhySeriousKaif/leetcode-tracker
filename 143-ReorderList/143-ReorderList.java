@@ -1,4 +1,4 @@
-// Last updated: 09/08/2026, 10:08:18
+// Last updated: 09/08/2026, 10:16:05
 1/**
 2 * Definition for singly-linked list.
 3 * public class ListNode {
@@ -9,39 +9,27 @@
 8 *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
 9 * }
 10 */
-11
-12class Solution {
-13    public void reorderList(ListNode head) {
-14        ListNode slow=head;
-15        ListNode fast=head;
-16        while(fast!=null && fast.next!=null){
-17            slow=slow.next;
-18            fast=fast.next.next;
-19        }
-20        ListNode mid=slow;
-21        ListNode rev=reverseList(mid);
-22        ListNode curr=head;
-23        while(rev.next!=null){
-24
-25            ListNode tempCurr=curr.next;
-26            curr.next=rev;
-27            ListNode tempRev=rev.next;
-28            rev.next=tempCurr;
-29            curr=tempCurr;
-30            rev=tempRev;
+11class Solution {
+12    public void reorderList(ListNode head) {
+13        Stack<ListNode>st=new Stack<>();
+14        ListNode temp=head;
+15        while(temp!=null){
+16            st.add(temp);
+17            temp=temp.next;
+18        }
+19        int k=st.size()/2;
+20        ListNode curr=head;
+21        while(k>0){
+22            ListNode newNode=st.pop();
+23            ListNode tempCurr=curr.next;
+24            curr.next=newNode;
+25            newNode.next=tempCurr;
+26            curr=tempCurr;
+27            k--;
+28        }
+29        curr.next=null;
+30
 31
-32        }
-33
-34        
-35    }
-36    public static ListNode reverseList(ListNode head){
-37        if(head==null || head.next==null){
-38            return head;
-39        }
-40        ListNode last=reverseList(head.next);
-41        head.next.next=head;
-42        head.next=null;
-43        return last;
-44    }
-45}
-46
+32        
+33    }
+34}
